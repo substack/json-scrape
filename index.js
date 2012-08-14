@@ -19,9 +19,9 @@ module.exports = function (opts) {
                 error = err;
                 if (value !== undefined) {
                     stream.emit('data', value);
-                    value = undefined;
                 }
             }
+            value = undefined;
         };
     }
     
@@ -34,7 +34,7 @@ module.exports = function (opts) {
                 error = undefined;
                 
                 if (m) {
-                    pos = m[1];
+                    pos = parseInt(m[1], 10);
                     write(buf.slice(pos, buf.length));
                 }
             }
@@ -47,6 +47,8 @@ module.exports = function (opts) {
                 createParser();
                 parser.write(buf.slice(i, buf.length));
                 if (!error) break;
+                var m = String(error).match(/position (\d+)/);
+                if (m) i += parseInt(m[1], 10);
                 
                 error = undefined;
                 parser = undefined;
