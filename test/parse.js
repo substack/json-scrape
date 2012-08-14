@@ -17,7 +17,7 @@ test('chunks', function (t) {
         scraper.on('end', function () {
             t.same(objects, [
                 { type : 'test', value : 5 },
-                { x : 5, y : [ 5, 6, 7, 8 ] },
+                { x : 5, y : [ 5, 6, 7, [ 8, 9, 10 ] ] },
                 [ 1, 2, 3 ],
                 [ 'a', 'b', 'c', 'd', 'e' ],
             ]);
