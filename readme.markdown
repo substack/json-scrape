@@ -2,6 +2,8 @@
 
 Scrape json from messy input streams.
 
+[![build status](https://secure.travis-ci.org/substack/json-scrape.png)](http://travis-ci.org/substack/json-scrape)
+
 # example
 
 for a file with some json objects in it:
