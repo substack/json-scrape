@@ -3,8 +3,9 @@ var createScraper = require('../');
 var fs = require('fs');
 var chunky = require('chunky');
 
+var TIMES = 500;
 test('chunks', function (t) {
-    t.plan(100);
+    t.plan(TIMES);
     
     function scrape () {
         var scraper = createScraper();
@@ -25,7 +26,7 @@ test('chunks', function (t) {
     }
     
     fs.readFile(__dirname + '/data.txt', function (err, src) {
-        for (var i = 0; i < 100; i++) (function () {
+        for (var i = 0; i < TIMES; i++) (function () {
             var scraper = scrape();
             
             var chunks = chunky(src);
