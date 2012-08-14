@@ -1,6 +1,6 @@
 # json-scrape
 
-Scrape all json objects from noisy input streams.
+Scrape json from messy input streams.
 
 # example
 
