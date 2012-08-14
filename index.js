@@ -7,11 +7,16 @@ module.exports = function (opts) {
     var parser, value, pos;
     function createParser () {
         parser = new Parser;
+        var alive = true;
         
         parser.onValue = function () {
+            if (!alive) return;
             if (this.value !== undefined) {
-                if (value !== undefined && value !== this.value) {
-                    //stream.emit('data', value);
+                if (value !== undefined && value !== this.value
+                && this.stack.length === 1
+                && this.value[this.key] !== value) {
+                    stream.emit('data', value);
+                    value = undefined;
                 }
                 value = this.value;
             }
@@ -19,6 +24,8 @@ module.exports = function (opts) {
         parser.onError = function () {};
         
         parser.charError = function (buf, i) {
+            if (!alive) return;
+            alive = false;
             if (pos === undefined) {
                 pos = i;
                 if (value !== undefined) {
