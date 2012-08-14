@@ -6,4 +6,4 @@ libnibblist { "beep" : "boop" } flim-flammery [
 
 quipper-glubbility [7,8,9]
 
-["a","b",]{"x":10}
+[4,"a",qux]{"x":10}

@@ -3,7 +3,7 @@ var createScraper = require('../');
 var fs = require('fs');
 var chunky = require('chunky');
 
-var TIMES = 1;
+var TIMES = 100;
 test('messy errorful noise', function (t) {
     t.plan(TIMES);
     
@@ -18,6 +18,7 @@ test('messy errorful noise', function (t) {
             t.same(objects, [
                 { beep : 'boop' },
                 [ 7, 8, 9 ],
+                [ 4, 'a' ],
                 { x : 10 },
             ]);
         });
