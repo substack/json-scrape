@@ -48,8 +48,14 @@ module.exports = function (opts) {
             return;
         }
         
+        var s;
         for (var i = 0; i < buf.length; i++) {
-            var s = String.fromCharCode(buf[i]);
+            if (typeof buf === 'string') {
+                s = buf.charAt(i);
+            }
+            else {
+                s = String.fromCharCode(buf[i]);
+            }
             if (s === '[' || s === '{') {
                 createParser();
                 parser.write(buf.slice(i, buf.length));
