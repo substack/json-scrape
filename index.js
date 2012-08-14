@@ -28,6 +28,16 @@ module.exports = function (opts) {
     function write (buf) {
         if (parser) {
             parser.write(buf);
+            if (error) {
+                var m = String(error).match(/position (\d+)/);
+                parser = undefined;
+                error = undefined;
+                
+                if (m) {
+                    pos = m[1];
+                    write(buf.slice(pos, buf.length));
+                }
+            }
             return;
         }
         
@@ -35,14 +45,11 @@ module.exports = function (opts) {
             var s = String.fromCharCode(buf[i]);
             if (s === '[' || s === '{') {
                 createParser();
-                var res = parser.write(buf.slice(i, buf.length));
-                if (error) {
-                    error = undefined;
-                    parser = undefined;
-                }
-                else {
-                    break;
-                }
+                parser.write(buf.slice(i, buf.length));
+                if (!error) break;
+                
+                error = undefined;
+                parser = undefined;
             }
         }
     }
