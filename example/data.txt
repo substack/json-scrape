@@ -1,0 +1,12 @@
+blip: { "type" : "test", "value" : 5 }
+
+beep { "x" : 5 } boop
+
+[1,2,3]
+
+bloorp
+
+letters: ["a",
+"b","c",
+"d","e"] fgh
+
