@@ -1,4 +1,4 @@
-var through = require('through');
+var through = require('through2');
 var Parser = require('jsonparse');
 
 module.exports = function (opts) {
@@ -15,7 +15,7 @@ module.exports = function (opts) {
                 if (value !== undefined && value !== this.value
                 && this.stack.length === 1
                 && this.value[this.key] !== value) {
-                    stream.emit('data', value);
+                    stream.push(value);
                     value = undefined;
                 }
                 value = this.value;
@@ -29,23 +29,23 @@ module.exports = function (opts) {
             if (pos === undefined) {
                 pos = i;
                 if (value !== undefined) {
-                    stream.emit('data', value);
+                    stream.push(value);
                     value = undefined;
                 }
             }
         };
     }
     
-    function write (buf) {
+    function write (buf, enc, next) {
         if (parser) {
             parser.write(buf);
             if (pos !== undefined) {
                 parser = undefined;
                 var pos_ = pos;
                 pos = undefined;
-                write(buf.slice(pos_, buf.length));
+                return write(buf.slice(pos_, buf.length), enc, next);
             }
-            return;
+            return next();
         }
         
         var s;
@@ -66,15 +66,16 @@ module.exports = function (opts) {
                 parser = undefined;
             }
         }
+        next();
     }
     
-    function end () {
+    function end (next) {
         if (value !== undefined) {
-            stream.emit('data', value);
+            this.push(value);
         }
-        stream.emit('end');
+        next();
     }
     
-    var stream = through(write, end);
+    var stream = through({ readableObjectMode: true }, write, end);
     return stream;
 };
