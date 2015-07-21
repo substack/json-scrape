@@ -1,6 +1,6 @@
 {
   "name": "json-scrape",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "scrape json from messy input streams",
   "main": "index.js",
   "directories": {
