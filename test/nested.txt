@@ -1,0 +1,13 @@
+blip: { "type" : "test", "value" : 5 }
+
+beep { "x" : 5, "y" : [5,6
+,7,[8,9,10]] } boop
+
+[1,[2,3],[[[4,5],6]]]
+
+bloorp
+
+letters: ["a",
+"b","c",
+"d","e"] fgh
+
